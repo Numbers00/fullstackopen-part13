@@ -2,34 +2,28 @@ const { Model, DataTypes } = require('sequelize');
 
 const { sequelize } = require('../utils/db');
 
-class Blog extends Model {}
-Blog.init({
+class User extends Model {}
+User.init({
   id: {
     type: DataTypes.INTEGER,
     primaryKey: true,
     autoIncrement: true,
-    unique: true,
+    unique: true
   },
-  author: {
-    type: DataTypes.STRING
+  username: {
+    type: DataTypes.STRING,
+    allowNull: false,
+    unique: true
   },
-  url: {
+  name: {
     type: DataTypes.STRING,
     allowNull: false
-  },
-  title: {
-    type: DataTypes.STRING,
-    allowNull: false
-  },
-  likes: {
-    type: DataTypes.INTEGER,
-    defaultValue: 0
   }
 }, {
   sequelize,
   underscored: true,
   timestamps: true,
-  modelName: 'Blog'
+  modelName: 'User'
 });
 
-module.exports = Blog;
+module.exports = User;

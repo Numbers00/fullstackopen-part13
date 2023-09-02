@@ -9,6 +9,14 @@ Blog.sync({ alter: true }).then(() => {
   logger.info('Unable to sync blog table:', err);
 });
 
+const User = require('./user');
+User.sync({ alter: true }).then(() => {
+  logger.info('User table synced successfully!');
+}).catch(err => {
+  logger.info('Unable to sync user table:', err);
+});
+
 module.exports = {
-  Blog
+  Blog,
+  User
 };
