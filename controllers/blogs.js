@@ -36,6 +36,28 @@ router.post('/', async (req, res) => {
   }
 });
 
+router.put('/:id', blogFinder, async (req, res) => {
+  try {
+    const { body } = req;
+
+    const blog = req.blog;
+    if (!blog) res.status(404).end();
+
+    // if likes property is not included, do not update
+    if (!body.likes) return res.json(blog);
+
+    // Math.floor can handle strings that are valid numbers
+    else body.likes = Math.floor(body.likes);
+    
+    blog.likes = body.likes;
+    await blog.save();
+
+    res.json(blog);
+  } catch (error) {
+    res.status(400).json({ error });
+  }
+});
+
 router.delete('/:id', blogFinder, async (req, res) => {
   if (req.blog) await req.blog.destroy();
 
