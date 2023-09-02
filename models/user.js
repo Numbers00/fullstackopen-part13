@@ -13,6 +13,11 @@ User.init({
   username: {
     type: DataTypes.STRING,
     allowNull: false,
+    validate: {
+      isEmail: {
+        msg: 'Invalid email address for user\'s username'
+      }
+    },
     unique: true
   },
   name: {
