@@ -1,5 +1,12 @@
 require('dotenv').config();
 
+// const express = require('express');
+// const app = express();
+
+// app.get('/health', (_req, res) => {
+//   res.send('ok');
+// });
+
 const { Sequelize } = require('sequelize');
 
 const sequelize = new Sequelize(process.env.DATABASE_URL, {
@@ -9,13 +16,6 @@ const sequelize = new Sequelize(process.env.DATABASE_URL, {
       rejectUnauthorized: false
     }
   },
-});
-
-const express = require('express');
-const app = express();
-
-app.get('/health', (_req, res) => {
-  res.send('ok');
 });
 
 const main = async () => {
@@ -29,8 +29,3 @@ const main = async () => {
 };
 
 main();
-
-const PORT = process.env.PORT || 3001;
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
-});
