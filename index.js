@@ -18,17 +18,15 @@ app.get('/health', (_req, res) => {
   res.send('ok');
 });
 
-const main = async () => {
+app.get('/check-db', async (_req, res) => {
   try {
     await sequelize.authenticate();
-    console.log('Connection has been established successfully.');
     sequelize.close();
+    res.send('Connection has been established successfully.');
   } catch (error) {
-    console.error('Unable to connect to the database:', error);
+    res.status(500).send(`Unable to connect to the database ${error}`);
   }
-};
-
-main();
+});
 
 const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {
