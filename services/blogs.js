@@ -1,4 +1,4 @@
-const { Blog } = require('../models');
+const { Blog } = require('../postgresql/models');
 
 const getAll = async () => {
   const blogs = await Blog.findAll();
