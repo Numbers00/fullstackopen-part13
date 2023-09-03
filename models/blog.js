@@ -24,7 +24,14 @@ Blog.init({
   likes: {
     type: DataTypes.INTEGER,
     defaultValue: 0
-  }
+  },
+  // optional, defining relations in index.js
+  // automatically creates this field
+  // userId: {
+  //   type: DataTypes.INTEGER,
+  //   allowNull: false,
+  //   references: { model: 'users', key: 'id' },
+  // }
 }, {
   sequelize,
   underscored: true,

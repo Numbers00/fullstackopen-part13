@@ -1,7 +1,8 @@
 const router = require('express').Router();
 
-const { Blog } = require('../models');
+const { Blog, User } = require('../models');
 
+const { tokenExtractor } = require('../utils/middleware');
 const logger = require('../utils/logger');
 
 // middleware specific to this router
@@ -11,7 +12,10 @@ const blogFinder = async (req, res, next) => {
 };
 
 router.get('/', async (_req, res) => {
-  const blogs = await Blog.findAll();
+  const blogs = await Blog.findAll({
+    attributes: { exclude: ['userId'] },
+    include: { model: User, attributes: ['username', 'name'] }
+  });
 
   // null for no property ommitted, 2 for indentation in console
   // JSON.stringify() for array of objects
@@ -26,10 +30,14 @@ router.get('/:id', blogFinder, async (req, res) => {
   else res.status(404).end();
 });
 
-router.post('/', async (req, res) => {
-  const { body } = req;
+router.post('/', tokenExtractor, async (req, res) => {
+  const { body, decodedToken: { id: userId } } = req;
 
-  const blog = await Blog.create(body);
+  const user = await User.findByPk(userId);
+  if (!user) res.status(401).end();
+  logger.info('user', user.id, JSON.stringify(user, null, 2));
+  const blog = await Blog.create({ ...body, UserId: user.id });
+  logger.info(JSON.stringify(blog, null, 2));
 
   res.json(blog);
 });
