@@ -1,9 +1,9 @@
 POST http://localhost:3001/api/blogs
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3RAZ21haWwuY29tIiwiaWQiOjEsImlhdCI6MTY5MzY5OTQ0MH0.lTydGsZea6Gw8lG4_hQmt6BXjt_n2ZeipNRcDlWfTLI
+Authorization: {{$dotenv AUTH_SCHEME}} {{$dotenv AUTH_TOKEN}}
 
 {
-  "title": "Correct7 Test Blog",
+  "title": "Correct8 Test Blog",
   "author": "Test Author",
   "url": "http://test.com",
   "likes": 0
