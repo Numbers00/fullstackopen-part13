@@ -17,7 +17,10 @@ router.get('/', async (req, res) => {
   const { search } = req.query;
 
   const where = {};
-  if (search) where.title = { [Op.iLike]: `%${search}%` };
+  if (search) where[Op.or] = [
+    { title: { [Op.iLike]: `%${search}%` } },
+    { author: { [Op.iLike]: `%${search}%` } },
+  ];
 
   const blogs = await Blog.findAll({
     attributes: { exclude: ['UserId'] },
@@ -43,7 +46,6 @@ router.post('/', tokenExtractor, async (req, res) => {
 
   const user = await User.findByPk(userId);
   if (!user) res.status(401).end();
-  logger.info('user', user.id, JSON.stringify(user, null, 2));
   const blog = await Blog.create({ ...body, UserId: user.id });
   logger.info(JSON.stringify(blog, null, 2));
 
