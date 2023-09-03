@@ -25,7 +25,8 @@ router.get('/', async (req, res) => {
   const blogs = await Blog.findAll({
     attributes: { exclude: ['UserId'] },
     include: { model: User, attributes: ['username', 'name'] },
-    where
+    where,
+    order: [['likes', 'DESC']]
   });
 
   // null for no property ommitted, 2 for indentation in console
