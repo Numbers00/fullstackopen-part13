@@ -14,6 +14,8 @@ app.use('/api/health', require('./controllers/health'));
 app.use('/api/authors', require('./controllers/authors'));
 app.use('/api/blogs', require('./controllers/blogs'));
 app.use('/api/login', require('./controllers/login'));
+app.use('/api/logout', require('./controllers/logout'));
+app.use('/api/readinglists', require('./controllers/readinglists'));
 app.use('/api/users', require('./controllers/users'));
 
 // errorHandler has to be the last middleware

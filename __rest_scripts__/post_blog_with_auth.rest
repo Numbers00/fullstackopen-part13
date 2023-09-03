@@ -3,8 +3,9 @@ Content-Type: application/json
 Authorization: {{$dotenv AUTH_SCHEME}} {{$dotenv AUTH_TOKEN}}
 
 {
-  "title": "Correct8 Test Blog",
+  "title": "Test Blog 4",
   "author": "Test Author",
   "url": "http://test.com",
-  "likes": 0
+  "likes": 0,
+  "yearWritten": 2023
 }
