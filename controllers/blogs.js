@@ -1,3 +1,5 @@
+const { Op } = require('sequelize');
+
 const router = require('express').Router();
 
 const { Blog, User } = require('../models');
@@ -11,10 +13,20 @@ const blogFinder = async (req, res, next) => {
   next();
 };
 
-router.get('/', async (_req, res) => {
+router.get('/', async (req, res) => {
+  const { search } = req.query;
+
+  const where = {};
+  if (search) where[Op.or] = [
+    { title: { [Op.iLike]: `%${search}%` } },
+    { author: { [Op.iLike]: `%${search}%` } },
+  ];
+
   const blogs = await Blog.findAll({
     attributes: { exclude: ['UserId'] },
-    include: { model: User, attributes: ['username', 'name'] }
+    include: { model: User, attributes: ['username', 'name'] },
+    where,
+    order: [['likes', 'DESC']]
   });
 
   // null for no property ommitted, 2 for indentation in console
@@ -35,7 +47,6 @@ router.post('/', tokenExtractor, async (req, res) => {
 
   const user = await User.findByPk(userId);
   if (!user) res.status(401).end();
-  logger.info('user', user.id, JSON.stringify(user, null, 2));
   const blog = await Blog.create({ ...body, UserId: user.id });
   logger.info(JSON.stringify(blog, null, 2));
 

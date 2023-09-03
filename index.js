@@ -11,6 +11,7 @@ const app = express();
 app.use(express.json());
 
 app.use('/api/health', require('./controllers/health'));
+app.use('/api/authors', require('./controllers/authors'));
 app.use('/api/blogs', require('./controllers/blogs'));
 app.use('/api/login', require('./controllers/login'));
 app.use('/api/users', require('./controllers/users'));
