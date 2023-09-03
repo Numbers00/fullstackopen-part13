@@ -5,7 +5,7 @@ const router = require('express').Router();
 const { Blog, User } = require('../models');
 
 const { tokenExtractor } = require('../utils/middleware');
-const logger = require('../utils/logger');
+// const logger = require('../utils/logger');
 
 // middleware specific to this router
 const blogFinder = async (req, res, next) => {
@@ -32,7 +32,7 @@ router.get('/', async (req, res) => {
   // null for no property ommitted, 2 for indentation in console
   // JSON.stringify() for array of objects
   // without JSON formatting, will include extra properties
-  logger.info(JSON.stringify(blogs, null, 2));
+  // logger.info(JSON.stringify(blogs, null, 2));
 
   res.json(blogs);
 });
@@ -48,7 +48,7 @@ router.post('/', tokenExtractor, async (req, res) => {
   const user = await User.findByPk(userId);
   if (!user) res.status(401).end();
   const blog = await Blog.create({ ...body, UserId: user.id });
-  logger.info(JSON.stringify(blog, null, 2));
+  // logger.info(JSON.stringify(blog, null, 2));
 
   res.json(blog);
 });

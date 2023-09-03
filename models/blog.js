@@ -25,6 +25,20 @@ Blog.init({
     type: DataTypes.INTEGER,
     defaultValue: 0
   },
+  yearWritten: {
+    type: DataTypes.INTEGER,
+    allowNull: false,
+    validate: {
+      min: {
+        args: 1991,
+        msg: 'Year written must be greater than or equal to 1991'
+      },
+      max: {
+        args: new Date().getFullYear(),
+        msg: `Year written must be less than or equal to ${new Date().getFullYear()}`
+      }
+    }
+  }
   // optional, defining relations in index.js
   // automatically creates this field
   // userId: {
