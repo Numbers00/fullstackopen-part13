@@ -7,8 +7,10 @@ const User = require('./user');
 User.hasMany(Blog);
 Blog.belongsTo(User);
 
-User.belongsToMany(Blog, { through: ReadingList });
-Blog.belongsToMany(User, { through: ReadingList });
+// as: 'readings' is the alias for the relationship
+// as: cannot be reading_list because that is the name of the table
+User.belongsToMany(Blog, { through: ReadingList, as: 'readings' });
+Blog.belongsToMany(User, { through: ReadingList, as: 'in_reading_list_of' });
 
 // sync creates the table if it doesn't exist
 // alter: true will update the table if it exists
