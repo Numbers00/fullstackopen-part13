@@ -1,3 +1,5 @@
+const { Op } = require('sequelize');
+
 const router = require('express').Router();
 
 const { Blog, User } = require('../models');
@@ -11,10 +13,16 @@ const blogFinder = async (req, res, next) => {
   next();
 };
 
-router.get('/', async (_req, res) => {
+router.get('/', async (req, res) => {
+  const { search } = req.query;
+
+  const where = {};
+  if (search) where.title = { [Op.iLike]: `%${search}%` };
+
   const blogs = await Blog.findAll({
     attributes: { exclude: ['UserId'] },
-    include: { model: User, attributes: ['username', 'name'] }
+    include: { model: User, attributes: ['username', 'name'] },
+    where
   });
 
   // null for no property ommitted, 2 for indentation in console
