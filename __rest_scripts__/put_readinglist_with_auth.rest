@@ -1,4 +1,4 @@
-PUT http://localhost:3001/api/readinglists/2
+PUT http://localhost:3001/api/readinglists/1
 Content-Type: application/json
 Authorization: {{$dotenv AUTH_SCHEME}} {{$dotenv AUTH_TOKEN}}
 

@@ -3,7 +3,7 @@ Content-Type: application/json
 Authorization: {{$dotenv AUTH_SCHEME}} {{$dotenv AUTH_TOKEN}}
 
 {
-  "title": "Test Blog 1",
+  "title": "Test Blog 3",
   "author": "Test Author",
   "url": "http://test.com",
   "likes": 0,
