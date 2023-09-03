@@ -4,7 +4,7 @@ const router = require('express').Router();
 
 const { Blog, User } = require('../models');
 
-const { tokenExtractor } = require('../utils/middleware');
+const { tokenExtractor, verifySession } = require('../utils/middleware');
 // const logger = require('../utils/logger');
 
 // middleware specific to this router
@@ -42,7 +42,7 @@ router.get('/:id', blogFinder, async (req, res) => {
   else res.status(404).end();
 });
 
-router.post('/', tokenExtractor, async (req, res) => {
+router.post('/', tokenExtractor, verifySession, async (req, res) => {
   const { body, decodedToken: { id: userId } } = req;
 
   const user = await User.findByPk(userId);
@@ -71,7 +71,7 @@ router.put('/:id', blogFinder, async (req, res) => {
   res.json(blog);
 });
 
-router.delete('/:id', tokenExtractor, blogFinder, async (req, res) => {
+router.delete('/:id', tokenExtractor, verifySession, blogFinder, async (req, res) => {
   const { decodedToken: { id: userId } } = req;
 
   const user = await User.findByPk(userId);
