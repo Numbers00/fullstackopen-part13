@@ -1,0 +1,7 @@
+PUT http://localhost:3001/api/readinglists/2
+Content-Type: application/json
+Authorization: {{$dotenv AUTH_SCHEME}} {{$dotenv AUTH_TOKEN}}
+
+{
+  "wasRead": true
+}
